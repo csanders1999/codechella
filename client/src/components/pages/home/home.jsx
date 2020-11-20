@@ -1,10 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import Navbar from '../../navbar/navbar.jsx';
+import Searchbox from "../../searchbox/searchbox";
 
 export class home extends Component {
     render() {
         return (
             <div>
-                <h1>Home</h1>
+                <Navbar />
+                <Searchbox />
             </div>
         )
     }
