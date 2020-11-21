@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import Navbar from "../../navbar/navbar";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
 import "./results.css"
 
-import Tweets from "../../tweets/tweets";
+import Tweets, { tweets } from "../../tweets/tweets";
 
 export class results extends Component {
     
@@ -14,13 +15,28 @@ export class results extends Component {
             auth: false,
             total: 100,
             flagged: 10,
+            rating: 80,
+            emotion: "sad",
+            tweets: [],
             errors: []
         }
     }
 
+    componentDidMount() {
+        const test = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, rem quae! Temporibus nisi blanditiis est, itaque iusto eum quo praesentium aliquam voluptatum. Mollitia, a autem dolorum quo ipsam amet illo!";
+        let tweetsSetUp = [];
+        for (let i=0; i < 3; i++) {
+            tweetsSetUp.push(<Tweets body={test} key={i} />)
+        }
+        this.setState({
+            tweets: tweetsSetUp
+        })
+    }
+
 
     render() {
-        const test = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, rem quae! Temporibus nisi blanditiis est, itaque iusto eum quo praesentium aliquam voluptatum. Mollitia, a autem dolorum quo ipsam amet illo!"
+        const { auth, total, flagged, rating, tweets, emotion } = this.state;
+
         return (
             
             <>
@@ -29,17 +45,32 @@ export class results extends Component {
                     <h1 className="display-1">Summary</h1>
                 </Col>
                 <Row className="info-con">
-                    <Col>
-                        80%
+                    <Col className="ml-5">
+                        <Row>
+                            <h1 className="display1 rating-text">
+                                {rating}%
+                            </h1>
+                        </Row>
+                        <p className="emotion-text"> 
+                            Based on your recent 
+                            <br />tweets you appear as
+                            <div className="emotion-var-text">{emotion}</div>
+                        </p>
                     </Col>
                     <Col>
-                        < Tweets body={test} id={1}/>
-                        < Tweets body={test}/>
-                        < Tweets body={test}/>
+                        <h3 className="flagged-text display-5">
+                            {flagged} out of {total} tweets deemed "unprofessional"
+                        </h3>
+                        {tweets}
                         
                     </Col>
-                    <Col>
-                        Suggestions
+                    <Col className="">
+                        <Button className="custom-button mb-5" variant="primary">Delete All</Button>
+                        <Row>
+                            <h4 className="suggestion-text display-4">
+                                Suggestions
+                            </h4>
+                        </Row>
                     </Col>
                 </Row>
                 

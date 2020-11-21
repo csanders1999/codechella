@@ -6,5 +6,31 @@
 }
 
 .info-con {
-    
+    max-width: 100%;
+}
+
+.flagged-text {
+    color: #1DA1F2;
+    font-family: Roboto;
+}
+
+.sugesstion-text {
+    font-family: Roboto;
+    color: #1DA1F2;
+}
+
+.rating-text {
+    color: #1DA1F2;
+    font-family: Roboto;
+    margin-left: 20%;
+}
+
+.emotion-text {
+    margin-left: 8%;
+    font-size: x-large;
+}
+
+.emotion-var-text {
+    margin-left: 10%;
+    font-weight: bold;
 }
