@@ -25,9 +25,10 @@ def get_results(api, user):
     unprofessional_photos = get_photos(public_tweets)
     return_json['unprofessional_photos'] = unprofessional_photos
 
+    percentage = get_percentage(len(public_tweets), len(bad_tweets), len(unprofessional_photos), impression)
+    return_json['percentage'] = percentage
+
     return(return_json)
-
-
 
 def get_impression(public_tweets):
 
@@ -142,3 +143,19 @@ def get_photos(public_tweets):
                     print("Error clasifying image")
 
     return(unprofessional_photos)
+
+def get_percentage(num_total, num_bad, num_bad_pics, impressions):
+    percentage_of_bad_tweets = num_bad / num_total
+    percentage_of_bad_pics = num_bad_pics / 10
+    bad_impression = 0
+
+    for impression in impressions:
+        if impression in ['worry-prone', 'melancholic','self-conscious', 'stress-prone']:
+            bad_impression +=1
+
+    
+    percentage_of_bad_impression = bad_impression / 3
+    
+    total_percentage = 1 - ((percentage_of_bad_tweets * .50) + (percentage_of_bad_pics * .35) + (percentage_of_bad_impression * .15))
+
+    return(total_percentage * 100)
