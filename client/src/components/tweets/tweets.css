@@ -3,9 +3,11 @@
     border-radius: 30px;
     max-width: 65%;
     margin-left: 10%;
+    font-weight: lighter;
 }
 
 .reason {
     margin-left: 11%;
     max-width: 60%;
+    font-weight: lighter;
 }
