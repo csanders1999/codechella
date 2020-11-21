@@ -10,7 +10,7 @@ export class navbar extends Component {
         return (
             <Navbar collapseOnSelect expand="md"className="justify-content-between nav-bar">
                 <Navbar.Brand>
-                    <Link to="/Home">
+                    <Link to="/">
                        
                         Project Name
                         
