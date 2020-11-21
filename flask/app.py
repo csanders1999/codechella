@@ -36,6 +36,20 @@ def view():
 
     try:
         user = request.args.get('q')
+        public_tweets = api.user_timeline(user)
+    except:
+        return(jsonify({'status': 0}))
+
+    return(jsonify({'status': 1})) # 0 error, 1 passes
+
+@app.route('/results/')
+def results():
+    auth = tweepy.OAuthHandler(config.consumer_key, config.consumer_secret)
+    auth.set_access_token(config.access_token, config.access_token_secret)
+    api = tweepy.API(auth)
+
+    try:
+        user = request.args.get('q')
         return_json = jsonify(get_results(api, user))
     except:
         return(jsonify({'status': 0})) # 0 error, 1 passes
