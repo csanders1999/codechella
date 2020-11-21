@@ -1,0 +1,11 @@
+.tweet-card {
+    background-color: #1DA1F2;
+    border-radius: 30px;
+    max-width: 65%;
+    margin-left: 18%;
+}
+
+.reason {
+    margin-left: 20%;
+    max-width: 65%;
+}
