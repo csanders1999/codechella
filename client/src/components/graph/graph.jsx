@@ -41,7 +41,7 @@ export class graph extends Component {
         
         svg
             .append("g")
-            .attr("fill", 'royalblue')
+            .attr("fill", '#1DA1F2')
             .selectAll("rect")
             .data(data.sort((a, b) => d3.descending(a.score, b.score)))
             .join("rect")

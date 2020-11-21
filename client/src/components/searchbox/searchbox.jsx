@@ -19,35 +19,6 @@ export class searchbox extends Component {
         };
     }
 
-    handleChange = (input) => (e) => {
-        this.setState({ [input]: e.target.value });
-        console.log(input, e.target.value);
-    };
-
-    
-    handleSubmit = (e) => {
-        e.preventDefault();
-        const { handle } = this.state
-        API.checkUser(handle).then((result) => {
-            if (result.status === 200) {
-                console.log(result);
-                if (result.data.status === 0) {
-                    alert("User not found");
-                    
-                }
-                else {
-                    console.log("User was found");
-                }
-            }
-        })
-        .catch((errors) => {
-            console.log(errors);
-            this.setState({
-              errors
-            })
-        })
-    };
-
     render() {
         return (
             <Container className="custom-container">
@@ -55,10 +26,10 @@ export class searchbox extends Component {
 
                 <Row>
                     <Col>
-                        <Form.Control className="cutom-searchbox" type="email" placeholder="Your Twitter @" onChange={this.handleChange("handle")} />
+                        <Form.Control className="cutom-searchbox" type="email" placeholder="Your Twitter @" onChange={this.props.change("handle")} />
                     </Col>
                     <Col>
-                        <Button className="custom-button" variant="primary" onClick={this.handleSubmit} >Search</Button>
+                        <Button className="custom-button" variant="primary" onClick={this.props.click} >Search</Button>
                     </Col>
                 </ Row>
                 <Container className="slogan-container mt-5">
