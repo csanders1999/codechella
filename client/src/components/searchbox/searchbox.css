@@ -1,8 +1,33 @@
 .custom-button {
-    width: 7%;
+    width: 30%;
 }
 
 .custom-container {
     margin-top: 10%;
     margin-left: 30%;
+}
+
+.title-text {
+    color: #1DA1F2;
+    font-size: 350%;
+    font-family: Roboto;
+    height: 10%;
+}
+
+.cutom-searchbox {
+    outline: 2px solid #1DA1F2;
+    margin-left: 5%;
+    padding-left: 30%;
+    padding-right: 20%;
+}
+
+.slogan-container {
+    margin-left: 5%;
+    font-size: 150%;
+    font-family: Roboto;
+    color: #C4C4C4;
+}
+
+.text-shift {
+    margin-left: 10%;
 }
