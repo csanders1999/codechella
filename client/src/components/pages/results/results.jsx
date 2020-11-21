@@ -5,7 +5,8 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import "./results.css"
 
-import Tweets, { tweets } from "../../tweets/tweets";
+import Tweets from "../../tweets/tweets";
+import Graph from "../../graph/graph";
 
 export class results extends Component {
     
@@ -56,6 +57,7 @@ export class results extends Component {
                             <br />tweets you appear as
                             <div className="emotion-var-text">{emotion}</div>
                         </p>
+                        <Graph />
                     </Col>
                     <Col>
                         <h3 className="flagged-text display-5">

@@ -6,6 +6,7 @@
 .custom-container {
     margin-top: 10%;
     margin-left: 30%;
+    max-width: 70%;
 }
 
 .title-text {
@@ -17,9 +18,8 @@
 
 .cutom-searchbox {
     outline: 2px solid #1DA1F2;
-    margin-left: 5%;
     padding-left: 30%;
-    padding-right: 20%;
+    padding-right: 18%;
 }
 
 .slogan-container {
