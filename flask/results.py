@@ -1,18 +1,24 @@
 import tweepy
 import config
 from ibm_watson import PersonalityInsightsV3
+from watson_developer_cloud import VisualRecognitionV3
 import json
 from os.path import join
 from flask import jsonify
+import re
 
 def get_results(api, user):
 
     return_json = {'status':1}
-    public_tweets = api.user_timeline(user)
+
+    public_tweets = api.user_timeline(user, count=500)
+    return_json['total_number_of_tweets'] = len(public_tweets)
 
     impression = get_impression(public_tweets)
-
     return_json['first_impression'] = impression
+
+    unprofessional_photos = get_photos(public_tweets)
+    return_json['unprofessional_photos'] = unprofessional_photos
 
     return(return_json)
 
@@ -95,3 +101,39 @@ def get_impression(public_tweets):
     personalities = sorted(personality, key=personality.get, reverse=True)[:3]
 
     return(personalities)
+
+def get_photos(public_tweets):
+    visual_recognition = VisualRecognitionV3(config.myVersion2, iam_apikey=config.myIam_apikey2)
+    unprofessional_photos = []
+    alcohol_keywords = ["beer", "wine", "shot", "beer bottle", "alcoholic beverage", "stout", "ale", "brew", "mixed drink"]
+    nudity_keywords = ["underwear", "undergarment", "lingerie", "bra", "panty", "underpant"]
+    other_keywords = ["drug", "drugs", "party", "illegal", "inappropriate"]
+    num_of_images = 0
+    for tweet in public_tweets:
+        if 'media' in tweet.entities and num_of_images <10:
+            for image in  tweet.entities['media']:
+                print("Attempting to classify possible image...")
+                num_of_images += 1
+                try:
+                    url = image['media_url']
+                    classes_result = visual_recognition.classify(url=url).get_result() # classifies image
+
+                    # Gets json data
+                    classify_data = json.dumps(classes_result["images"][0]["classifiers"][0]["classes"], indent=2)
+                    # Going through every dictionary in list of json date
+                    for dict in json.loads(classify_data):
+                        for key, value in dict.items():
+                            if value in alcohol_keywords:
+                                if(len(unprofessional_photos) == 0 or unprofessional_photos[-1]['tweet'] != tweet.text):
+                                    unprofessional_photos.append({'tweet': tweet.text, 'reason': 'alcohol'})
+                            if value in nudity_keywords:
+                                if(len(unprofessional_photos) == 0 or unprofessional_photos[-1]['tweet'] != tweet.text):
+                                    unprofessional_photos.append({'tweet': tweet.text, 'reason': 'nudity'})
+                            if value in other_keywords:
+                                if(len(unprofessional_photos) == 0 or unprofessional_photos[-1]['tweet'] != tweet.text):
+                                    unprofessional_photos.append({'tweet': tweet.text, 'reason': value})
+
+                except:
+                    print("Error clasifying image")
+
+    return(unprofessional_photos)
