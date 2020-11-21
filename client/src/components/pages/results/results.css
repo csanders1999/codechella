@@ -3,6 +3,7 @@
     font-family: Roboto;
     margin-top: 2%;
     text-align: center;
+    font-weight: lighter;
 }
 
 .info-con {
@@ -14,9 +15,10 @@
     font-family: Roboto;
 }
 
-.sugesstion-text {
-    font-family: Roboto;
+.suggestion-text {
     color: #1DA1F2;
+    font-family: Roboto;
+    font-weight: lighter;
 }
 
 .rating-text {

@@ -6,6 +6,7 @@ import json
 from os.path import join
 from flask import jsonify
 import re
+from rate_tweets import rate_tweets
 
 def get_results(api, user):
 
@@ -13,6 +14,9 @@ def get_results(api, user):
 
     public_tweets = api.user_timeline(user, count=500)
     return_json['total_number_of_tweets'] = len(public_tweets)
+
+    bad_tweets = rate_tweets(public_tweets)
+    return_json['unprofessional_tweets'] = bad_tweets
 
     impression = get_impression(public_tweets)
     return_json['first_impression'] = impression
@@ -97,7 +101,7 @@ def get_impression(public_tweets):
     personality['melancholic'] += profile['personality'][4]['children'][0]['raw_score']
     personality['self-conscious'] += profile['personality'][4]['children'][0]['raw_score']
     personality['stress-prone'] += profile['personality'][4]['children'][0]['raw_score']
-    
+
     personalities = sorted(personality, key=personality.get, reverse=True)[:3]
 
     return(personalities)

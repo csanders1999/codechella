@@ -41,7 +41,7 @@ export class results extends Component {
         return (
             
             <>
-                <Navbar />
+                
                 <Col className="summary-text">
                     <h1 className="display-1">Summary</h1>
                 </Col>
