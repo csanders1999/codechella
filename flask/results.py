@@ -17,6 +17,7 @@ def get_results(api, user):
 
     bad_tweets = rate_tweets(public_tweets)
     return_json['unprofessional_tweets'] = bad_tweets
+    return_json['number_of_unprofessional_tweets'] = len(bad_tweets)
 
     impression = get_impression(public_tweets)
     return_json['first_impression'] = impression
