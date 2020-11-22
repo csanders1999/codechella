@@ -7,6 +7,7 @@ import "./results.css"
 
 import Tweets from "../../tweets/tweets";
 import Graph from "../../graph/graph";
+import Suggestion from "../../suggestion/suggestion";
 
 export class results extends Component {
     
@@ -21,15 +22,16 @@ export class results extends Component {
             pictureTweets: this.props.result.unprofessional_photos,
             rating: this.props.result.percentage,
             graphData: this.props.result.graph_data,
+            suggestions: this.props.result.suggestions,
             tweets: null
         }
-        /*
-        this.state = {
+        
+        /*this.state = {
             results: {},
             emotion: [],
             totalTweets: 0,
             amountUnprofessionalTweets: 1,
-            unprofessionalTweets: [],
+            unprofessionalTweets: [{id: 123, reason:"idk", tweet:"hello world!"}],
             pictureTweets: [],
             rating: 0,
             graphData: [
@@ -38,6 +40,7 @@ export class results extends Component {
                 { name: 'Other', score: 20}
             
             ],
+            suggestions: ["Try making a bio that aligns with your professional interests!", "Test", "Another Test"],
             tweets: null
         }*/
     }
@@ -61,7 +64,7 @@ export class results extends Component {
 
 
     render() {
-        const { emotion, totalTweets, amountUnprofessionalTweets, rating, tweets, graphData } = this.state;
+        const { emotion, totalTweets, amountUnprofessionalTweets, rating, tweets, graphData, suggestions } = this.state;
 
         return (
             
@@ -98,6 +101,7 @@ export class results extends Component {
                                 Suggestions
                             </h4>
                         </Row>
+                        <Suggestion data={suggestions} />
                     </Col>
                 </Row>
                 
