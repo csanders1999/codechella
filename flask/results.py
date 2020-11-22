@@ -12,7 +12,7 @@ def get_results(api, user):
 
     return_json = {'status':1}
 
-    public_tweets = api.user_timeline(user, count=1)
+    public_tweets = api.user_timeline(user, count=151, tweet_mode='extended')
     return_json['total_number_of_tweets'] = len(public_tweets)
 
     bad_tweets = rate_tweets(public_tweets)
@@ -72,7 +72,7 @@ def get_impression(public_tweets):
     newTweets = []
     graph_data = []
     for tweet in public_tweets:
-        newTweets.append(tweet.text)
+        newTweets.append(tweet.full_text)
     tweets= {'contentItems': newTweets}
 
     with open('./profile.json', 'w') as fp:
@@ -112,26 +112,30 @@ def get_impression(public_tweets):
         personality['stress-prone'] += profile['personality'][4]['children'][0]['raw_score']
 
         personalities = sorted(personality, key=personality.get, reverse=True)[:3]
+        return_str = ""
+        for p in personalities[:2]:
+            return_str += p + ", "
+        
+        return_str += "and " + personalities[-1]
 
-        for key, value in personality:
-            personality[key] = value*100
-            graph_data.append({'name': key, 'score': value})
+        for key, value in personality.items():
+            graph_data.append({'name': key, 'score': round(value * 100)})
 
     except:
-        personalities = []
+        return_str = ""
         graph_data = [
                 { 'name': 'Professional', 'score': 80 },
                 { 'name': 'Nonprofessional', 'score': 76 },
             ]
 
-    return(graph_data, personalities)
+    return(graph_data, return_str)
 
 def get_photos(public_tweets):
     visual_recognition = VisualRecognitionV3(config.myVersion2, iam_apikey=config.myIam_apikey2)
     unprofessional_photos = []
-    alcohol_keywords = ["beer", "wine", "shot", "beer bottle", "alcoholic beverage", "stout", "ale", "brew", "mixed drink"]
-    nudity_keywords = ["underwear", "undergarment", "lingerie", "bra", "panty", "underpant"]
-    other_keywords = ["drug", "drugs", "party", "illegal", "inappropriate"]
+    alcohol_keywords = set(["beer", "wine", "shot", "beer bottle", "alcoholic beverage", "stout", "ale", "brew", "mixed drink"])
+    nudity_keywords = set(["underwear", "undergarment", "lingerie", "bra", "panty", "underpant"])
+    other_keywords = set(["drug", "drugs", "party", "illegal", "inappropriate"])
     num_of_images = 0
     for tweet in public_tweets:
         if 'media' in tweet.entities and num_of_images <10:
@@ -148,14 +152,14 @@ def get_photos(public_tweets):
                     for dict in json.loads(classify_data):
                         for key, value in dict.items():
                             if value in alcohol_keywords:
-                                if(len(unprofessional_photos) == 0 or unprofessional_photos[-1]['tweet'] != tweet.text):
-                                    unprofessional_photos.append({'tweet': tweet.text, 'id': tweet.id,'reason': 'alcohol'})
+                                if(len(unprofessional_photos) == 0 or unprofessional_photos[-1]['tweet'] != tweet.full_text):
+                                    unprofessional_photos.append({'tweet': tweet.full_text, 'id': tweet.id,'reason': 'alcohol'})
                             if value in nudity_keywords:
-                                if(len(unprofessional_photos) == 0 or unprofessional_photos[-1]['tweet'] != tweet.text):
-                                    unprofessional_photos.append({'tweet': tweet.text, 'id': tweet.id,'reason': 'nudity'})
+                                if(len(unprofessional_photos) == 0 or unprofessional_photos[-1]['tweet'] != tweet.full_text):
+                                    unprofessional_photos.append({'tweet': tweet.full_text, 'id': tweet.id,'reason': 'nudity'})
                             if value in other_keywords:
-                                if(len(unprofessional_photos) == 0 or unprofessional_photos[-1]['tweet'] != tweet.text):
-                                    unprofessional_photos.append({'tweet': tweet.text, 'id': tweet.id,'reason': value})
+                                if(len(unprofessional_photos) == 0 or unprofessional_photos[-1]['tweet'] != tweet.full_text):
+                                    unprofessional_photos.append({'tweet': tweet.full_text, 'id': tweet.id,'reason': value})
 
                 except:
                     print("Error clasifying image")
@@ -181,5 +185,5 @@ def get_percentage(num_total, num_bad, num_bad_pics, impressions):
     return(round(total_percentage * 100))
 
 def get_suggestions():
-    suggestions = ["Try making a bio that aligns with your profesional interests!"]
+    suggestions = ["Try making a bio that aligns with your professional interests!"]
     return(suggestions)

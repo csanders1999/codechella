@@ -36,7 +36,7 @@ export class tweets extends Component {
                 
 
                 <Col className="mt-3 reason">
-                    This Tweet is unprofessional because {reason}
+                    This Tweet is unprofessional because it contains {reason}
                 </Col>
             </>
         )

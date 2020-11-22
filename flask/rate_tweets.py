@@ -29,7 +29,7 @@ def rate_tweets(tweets):
     return list of tweets deemed unprofessional
     '''
     profane_words = []
-    with open('flask/profanity_wordlist.txt', 'r') as f:
+    with open('./profanity_wordlist.txt', 'r') as f:
         for line in f:
             profane_words.append(line.strip())
     unprofessional_tweets = []
