@@ -12,7 +12,7 @@ export class home extends Component {
         this.state = {
             user: false,
             handle: null,
-            result: null,
+            results: null,
         };
     }
 
@@ -26,13 +26,18 @@ export class home extends Component {
         const { handle } = this.state;
         API.checkUser(handle).then((result) => {
             if (result.status === 200) {
-                console.log(result);
                 if (result.data.status === 0) {
                     alert("User not found");
-                    return false;
                 }
                 else {
                     this.setState({ user: true });
+                    API.results(handle).then((result) => {
+                        if (result.status === 0) {
+                            this.setState({
+                                result: result.data
+                            })
+                        }
+                    })
                 }
             }
         })
@@ -51,7 +56,7 @@ export class home extends Component {
     }
 
     render() {
-        const { user } = this.state;
+        const { user, results } = this.state;
 
         if (!user) {
             return (
@@ -65,7 +70,7 @@ export class home extends Component {
             return (
                 <>
                     <Navbar click={this.handleClickTitle} />
-                    <Results />
+                    <Results result={results} />
                 </>
             )
         }
