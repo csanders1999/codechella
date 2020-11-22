@@ -12,7 +12,7 @@ def get_results(api, user):
 
     return_json = {'status':1}
 
-    public_tweets = api.user_timeline(user, count=500)
+    public_tweets = api.user_timeline(user, count=50)
     return_json['total_number_of_tweets'] = len(public_tweets)
 
     bad_tweets = rate_tweets(public_tweets)

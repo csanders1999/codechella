@@ -34,10 +34,13 @@ def rate_tweets(tweets):
     '''
     unprofessional_tweets = []
     for tweet in tweets:
-        out = unprofessional(tweet.full_text)
+        print(tweet.text)
+        out = unprofessional(tweet.text)
         if out[0]:
-            unprofessional_tweets.append({'tweet': tweet,
-                                          'reason': out[1]})
+            unprofessional_tweets.append({'tweet': tweet.text,
+                                          'reason': out[1],
+                                          'id': tweet.id})
+    print(unprofessional_tweets)
     return unprofessional_tweets
 
 '''
