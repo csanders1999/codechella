@@ -28,6 +28,7 @@ def get_results(api, user):
     percentage = get_percentage(len(public_tweets), len(bad_tweets), len(unprofessional_photos), impression)
     return_json['percentage'] = percentage
 
+    return_json['graph_data'] = {}
     return(return_json)
 
 def get_impression(public_tweets):

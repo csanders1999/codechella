@@ -2,7 +2,7 @@
 import tweepy
 import config
 from better_profanity import profanity
-import language_check
+import language_tool_python
 
 def remove_twitter_chars(tweet):
     tweet_arr = tweet.split(' ')
@@ -16,7 +16,7 @@ def unprofessional(tweet):
     function to determine whether tweet is professional or not
     returns true if tweet is unprofessional, false otherwise
     '''
-    tool = language_check.LanguageTool('en-US')
+    tool = language_tool_python.LanguageTool('en-US')
     if profanity.contains_profanity(tweet):
         return True, 'profanity'
     elif len(tool.check(remove_twitter_chars(tweet))) > 0:
