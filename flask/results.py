@@ -12,12 +12,11 @@ def get_results(api, user):
 
     return_json = {'status':1}
 
-    public_tweets = api.user_timeline(user, count=50)
+    public_tweets = api.user_timeline(user, count=1)
     return_json['total_number_of_tweets'] = len(public_tweets)
 
     bad_tweets = rate_tweets(public_tweets)
     return_json['unprofessional_tweets'] = bad_tweets
-    return_json['number_of_unprofessional_tweets'] = len(bad_tweets)
 
     impression = get_impression(public_tweets)
     return_json['first_impression'] = impression
@@ -25,10 +24,16 @@ def get_results(api, user):
     unprofessional_photos = get_photos(public_tweets)
     return_json['unprofessional_photos'] = unprofessional_photos
 
+    return_json['number_of_unprofessional_tweets'] = len(bad_tweets) + len(unprofessional_photos)
+
     percentage = get_percentage(len(public_tweets), len(bad_tweets), len(unprofessional_photos), impression)
     return_json['percentage'] = percentage
 
     return_json['graph_data'] = {}
+
+    return_json['suggestions'] = get_suggestions()
+
+    print("Returning results...")
     return(return_json)
 
 def get_impression(public_tweets):
@@ -157,9 +162,15 @@ def get_percentage(num_total, num_bad, num_bad_pics, impressions):
         if impression in ['worry-prone', 'melancholic','self-conscious', 'stress-prone']:
             bad_impression +=1
 
-    
     percentage_of_bad_impression = bad_impression / 3
+    
+    if len(impressions) == 0:
+        percentage_of_bad_impression = 1
     
     total_percentage = 1 - ((percentage_of_bad_tweets * .50) + (percentage_of_bad_pics * .35) + (percentage_of_bad_impression * .15))
 
-    return(total_percentage * 100)
+    return(round(total_percentage * 100))
+
+def get_suggestions():
+    suggestions = ["Try making a bio that aligns with your profesional interests!"]
+    return(suggestions)
