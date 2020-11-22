@@ -13,22 +13,29 @@ export class results extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            auth: false,
-            total: 100,
-            flagged: 10,
-            rating: 80,
-            emotion: "sad",
-            tweets: [],
-            errors: []
+            results: this.props.result,
+            emotion: this.props.result.first_impression,
+            totalTweets: this.props.result.total_number_of_tweets,
+            amountUnprofessionalTweets: this.props.result.number_of_unprofessional_tweets,
+            unprofessionalTweets: this.props.result.unprofessional_tweets,
+            pictureTweets: this.props.result.unprofessional_photos,
+            rating: this.props.result.percentage,
+            tweets: null
         }
     }
 
     componentDidMount() {
-        const test = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, rem quae! Temporibus nisi blanditiis est, itaque iusto eum quo praesentium aliquam voluptatum. Mollitia, a autem dolorum quo ipsam amet illo!";
+        const { unprofessionalTweets, pictureTweets } = this.state;
         let tweetsSetUp = [];
-        for (let i=0; i < 3; i++) {
-            tweetsSetUp.push(<Tweets body={test} key={i} />)
+        
+        for (let index=0; index < unprofessionalTweets.length; index++) {
+            tweetsSetUp.push(<Tweets body={unprofessionalTweets[index].tweet} reason={unprofessionalTweets[index].reason} key={index} />)
         }
+
+        for (let index=0; index < pictureTweets.length; index++) {
+            tweetsSetUp.push(<Tweets body={pictureTweets[index].tweet} reason={pictureTweets[index].reason} key={index} />)
+        }
+
         this.setState({
             tweets: tweetsSetUp
         })
@@ -36,7 +43,7 @@ export class results extends Component {
 
 
     render() {
-        const { auth, total, flagged, rating, tweets, emotion } = this.state;
+        const { emotion, totalTweets, amountUnprofessionalTweets, rating, tweets } = this.state;
 
         return (
             
@@ -61,7 +68,7 @@ export class results extends Component {
                     </Col>
                     <Col>
                         <h3 className="flagged-text display-5">
-                            {flagged} out of {total} tweets deemed "unprofessional"
+                            {amountUnprofessionalTweets} out of {totalTweets} tweets deemed "unprofessional"
                         </h3>
                         {tweets}
                         
