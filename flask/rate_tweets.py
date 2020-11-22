@@ -18,7 +18,6 @@ def unprofessional(tweet):
     '''
     tool = language_tool_python.LanguageTool('en-US')
     if profanity.contains_profanity(tweet):
-        return True, 'profanity'
     elif len(tool.check(remove_twitter_chars(tweet))) > 0:
         return True, 'grammar'
     #anything else?
