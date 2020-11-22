@@ -186,5 +186,5 @@ def get_percentage(num_total, num_bad, num_bad_pics, impressions):
     return(round(total_percentage * 100))
 
 def get_suggestions():
-    suggestions = ["Create a bio that aligns with your professional interests!", "Connect with people in your network!", "Stay updated on trends in your field!"]
+    suggestions = ["Connect with people in your network!", "Stay updated on trends in your field!", "Create a bio that aligns with your professional interests!"]
     return(suggestions)

@@ -22,7 +22,7 @@ export class graph extends Component {
         const svg = d3.select('#d3-container')
             .append('svg')
             .attr('width', width - margin.left - margin.right)
-            .attr('height', height - margin.top - margin.bottom)
+            .attr('height', height +200)
             .attr("viewBox", [0, 0, width, height]);
         
         // this allows chart to be dynamic and allow any data
@@ -59,8 +59,8 @@ export class graph extends Component {
             .call(d3.axisBottom(x).tickFormat(i => data[i].name))
             .attr("font-size", '20px')
             .selectAll("text")
-                .attr("x", 9)
-                .attr("transform", "rotate(90)")
+                .attr("x", 8)
+                .attr("transform", "rotate(65)")
                 .style("text-anchor", "start");
         }
         
