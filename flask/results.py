@@ -12,23 +12,27 @@ def get_results(api, user):
 
     return_json = {'status':1}
 
-    public_tweets = api.user_timeline(user, count=50)
+    public_tweets = api.user_timeline(user, count=1)
     return_json['total_number_of_tweets'] = len(public_tweets)
 
     bad_tweets = rate_tweets(public_tweets)
     return_json['unprofessional_tweets'] = bad_tweets
-    return_json['number_of_unprofessional_tweets'] = len(bad_tweets)
 
-    impression = get_impression(public_tweets)
+    graph_data, impression = get_impression(public_tweets)
     return_json['first_impression'] = impression
+    return_json['graph_data'] = graph_data
 
     unprofessional_photos = get_photos(public_tweets)
     return_json['unprofessional_photos'] = unprofessional_photos
 
+    return_json['number_of_unprofessional_tweets'] = len(bad_tweets) + len(unprofessional_photos)
+
     percentage = get_percentage(len(public_tweets), len(bad_tweets), len(unprofessional_photos), impression)
     return_json['percentage'] = percentage
 
-    return_json['graph_data'] = {}
+    return_json['suggestions'] = get_suggestions()
+
+    print("Returning results...")
     return(return_json)
 
 def get_impression(public_tweets):
@@ -66,6 +70,7 @@ def get_impression(public_tweets):
 
 
     newTweets = []
+    graph_data = []
     for tweet in public_tweets:
         newTweets.append(tweet.text)
     tweets= {'contentItems': newTweets}
@@ -107,10 +112,19 @@ def get_impression(public_tweets):
         personality['stress-prone'] += profile['personality'][4]['children'][0]['raw_score']
 
         personalities = sorted(personality, key=personality.get, reverse=True)[:3]
+
+        for key, value in personality:
+            personality[key] = value*100
+            graph_data.append({'name': key, 'score': value})
+
     except:
         personalities = []
+        graph_data = [
+                { 'name': 'Professional', 'score': 80 },
+                { 'name': 'Nonprofessional', 'score': 76 },
+            ]
 
-    return(personalities)
+    return(graph_data, personalities)
 
 def get_photos(public_tweets):
     visual_recognition = VisualRecognitionV3(config.myVersion2, iam_apikey=config.myIam_apikey2)
@@ -135,13 +149,13 @@ def get_photos(public_tweets):
                         for key, value in dict.items():
                             if value in alcohol_keywords:
                                 if(len(unprofessional_photos) == 0 or unprofessional_photos[-1]['tweet'] != tweet.text):
-                                    unprofessional_photos.append({'tweet': tweet.text, 'reason': 'alcohol'})
+                                    unprofessional_photos.append({'tweet': tweet.text, 'id': tweet.id,'reason': 'alcohol'})
                             if value in nudity_keywords:
                                 if(len(unprofessional_photos) == 0 or unprofessional_photos[-1]['tweet'] != tweet.text):
-                                    unprofessional_photos.append({'tweet': tweet.text, 'reason': 'nudity'})
+                                    unprofessional_photos.append({'tweet': tweet.text, 'id': tweet.id,'reason': 'nudity'})
                             if value in other_keywords:
                                 if(len(unprofessional_photos) == 0 or unprofessional_photos[-1]['tweet'] != tweet.text):
-                                    unprofessional_photos.append({'tweet': tweet.text, 'reason': value})
+                                    unprofessional_photos.append({'tweet': tweet.text, 'id': tweet.id,'reason': value})
 
                 except:
                     print("Error clasifying image")
@@ -157,9 +171,15 @@ def get_percentage(num_total, num_bad, num_bad_pics, impressions):
         if impression in ['worry-prone', 'melancholic','self-conscious', 'stress-prone']:
             bad_impression +=1
 
-    
     percentage_of_bad_impression = bad_impression / 3
+
+    if len(impressions) == 0:
+        percentage_of_bad_impression = 1
     
     total_percentage = 1 - ((percentage_of_bad_tweets * .50) + (percentage_of_bad_pics * .35) + (percentage_of_bad_impression * .15))
 
-    return(total_percentage * 100)
+    return(round(total_percentage * 100))
+
+def get_suggestions():
+    suggestions = ["Try making a bio that aligns with your profesional interests!"]
+    return(suggestions)

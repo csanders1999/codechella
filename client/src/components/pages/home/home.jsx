@@ -30,11 +30,12 @@ export class home extends Component {
                     alert("User not found");
                 }
                 else {
-                    this.setState({ user: true });
-                    API.results(handle).then((result) => {
-                        if (result.status === 0) {
+                    API.results(handle).then((caitlin) => {
+                        console.log(caitlin.data)
+                        if (caitlin.status === 200) {
                             this.setState({
-                                result: result.data
+                                results: caitlin.data,
+                                user: true
                             })
                         }
                     })
