@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Card from "react-bootstrap/Card";
+import ListGroup from "react-bootstrap/ListGroup";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
@@ -26,11 +26,11 @@ export class tweets extends Component {
         return (
             <>
                 <Row> 
-                    <Card className="tweet-card mt-4">
-                        <Card.Body>
-                            {body}
-                        </Card.Body>
-                    </Card>
+                    <ListGroup className="tweet mt-4">
+                        <ListGroup.Item>
+                            { body }
+                        </ListGroup.Item>
+                    </ListGroup>
                     <Image src={trash} className="ml-3" onClick={() => this.delete(this.props.id)} />
                 </Row>
                 

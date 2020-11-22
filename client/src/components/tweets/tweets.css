@@ -1,10 +1,12 @@
-.tweet-card {
-    background-color: #1DA1F2;
-    border-radius: 30px;
+.tweet {
+    min-width: 65%;
     max-width: 65%;
     margin-left: 10%;
+    font-family: Roboto;
     font-weight: lighter;
+    color: #1DA1F2;
 }
+
 
 .reason {
     margin-left: 11%;
