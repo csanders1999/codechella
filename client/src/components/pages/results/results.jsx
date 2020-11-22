@@ -20,8 +20,26 @@ export class results extends Component {
             unprofessionalTweets: this.props.result.unprofessional_tweets,
             pictureTweets: this.props.result.unprofessional_photos,
             rating: this.props.result.percentage,
+            graphData: this.props.result.graph_data,
             tweets: null
         }
+        /*
+        this.state = {
+            results: {},
+            emotion: [],
+            totalTweets: 0,
+            amountUnprofessionalTweets: 1,
+            unprofessionalTweets: [],
+            pictureTweets: [],
+            rating: 0,
+            graphData: [
+                { name: 'Professional', score: 80 },
+                { name: 'Nonprofessional', score: 76 },
+                { name: 'Other', score: 20}
+            
+            ],
+            tweets: null
+        }*/
     }
 
     componentDidMount() {
@@ -43,7 +61,7 @@ export class results extends Component {
 
 
     render() {
-        const { emotion, totalTweets, amountUnprofessionalTweets, rating, tweets } = this.state;
+        const { emotion, totalTweets, amountUnprofessionalTweets, rating, tweets, graphData } = this.state;
 
         return (
             
@@ -64,7 +82,7 @@ export class results extends Component {
                             <br />tweets you appear as
                             <div className="emotion-var-text">{emotion}</div>
                         </p>
-                        <Graph />
+                        <Graph data={graphData} />
                     </Col>
                     <Col>
                         <h3 className="flagged-text display-5">

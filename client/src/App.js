@@ -14,7 +14,7 @@ export default class App extends Component {
           <Switch>
             <Route exact path="/" component={home} />
             <Route exact path="/login" component={login} />
-            <PrivateRoute exact path="/results" component={results} />
+            <Route exact path="/results" component={results} />
           </Switch>
         </Router>
       </div>
