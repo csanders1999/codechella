@@ -73,39 +73,42 @@ def get_impression(public_tweets):
     with open('./profile.json', 'w') as fp:
         json.dump(tweets, fp, indent=2)
 
-    with open('./profile.json') as profile_json:
-        profile = personality_insights.profile(
-            profile_json.read(),
-            'application/json',
-            content_type='application/json',
-            consumption_preferences=True,
-            raw_scores=True
-        ).get_result()
+    try:
+        with open('./profile.json') as profile_json:
+            profile = personality_insights.profile(
+                profile_json.read(),
+                'application/json',
+                content_type='application/json',
+                consumption_preferences=True,
+                raw_scores=True
+            ).get_result()
 
-    personality['adventurous'] += profile['personality'][0]['children'][0]['raw_score']
-    personality['emotionally-intelligent'] += profile['personality'][0]['children'][2]['raw_score']
-    personality['imaginative'] += profile['personality'][0]['children'][3]['raw_score']
-    personality['intellectual'] += profile['personality'][0]['children'][4]['raw_score']
+        personality['adventurous'] += profile['personality'][0]['children'][0]['raw_score']
+        personality['emotionally-intelligent'] += profile['personality'][0]['children'][2]['raw_score']
+        personality['imaginative'] += profile['personality'][0]['children'][3]['raw_score']
+        personality['intellectual'] += profile['personality'][0]['children'][4]['raw_score']
 
-    personality['cautious'] += profile['personality'][1]['children'][1]['raw_score']
-    personality['orderly'] += profile['personality'][1]['children'][3]['raw_score']
-    personality['disciplined'] += profile['personality'][1]['children'][4]['raw_score']
+        personality['cautious'] += profile['personality'][1]['children'][1]['raw_score']
+        personality['orderly'] += profile['personality'][1]['children'][3]['raw_score']
+        personality['disciplined'] += profile['personality'][1]['children'][4]['raw_score']
 
-    personality['assertive'] += profile['personality'][2]['children'][1]['raw_score']
-    personality['cheerful'] += profile['personality'][2]['children'][2]['raw_score']
-    personality['outgoing'] += profile['personality'][2]['children'][4]['raw_score']
+        personality['assertive'] += profile['personality'][2]['children'][1]['raw_score']
+        personality['cheerful'] += profile['personality'][2]['children'][2]['raw_score']
+        personality['outgoing'] += profile['personality'][2]['children'][4]['raw_score']
 
-    personality['modest'] += profile['personality'][3]['children'][2]['raw_score']
-    personality['uncompromising'] += profile['personality'][3]['children'][3]['raw_score']
-    personality['sympathetic'] += profile['personality'][3]['children'][4]['raw_score']
-    personality['trusting'] += profile['personality'][3]['children'][5]['raw_score']
+        personality['modest'] += profile['personality'][3]['children'][2]['raw_score']
+        personality['uncompromising'] += profile['personality'][3]['children'][3]['raw_score']
+        personality['sympathetic'] += profile['personality'][3]['children'][4]['raw_score']
+        personality['trusting'] += profile['personality'][3]['children'][5]['raw_score']
 
-    personality['worry-prone'] += profile['personality'][4]['children'][0]['raw_score']
-    personality['melancholic'] += profile['personality'][4]['children'][0]['raw_score']
-    personality['self-conscious'] += profile['personality'][4]['children'][0]['raw_score']
-    personality['stress-prone'] += profile['personality'][4]['children'][0]['raw_score']
+        personality['worry-prone'] += profile['personality'][4]['children'][0]['raw_score']
+        personality['melancholic'] += profile['personality'][4]['children'][0]['raw_score']
+        personality['self-conscious'] += profile['personality'][4]['children'][0]['raw_score']
+        personality['stress-prone'] += profile['personality'][4]['children'][0]['raw_score']
 
-    personalities = sorted(personality, key=personality.get, reverse=True)[:3]
+        personalities = sorted(personality, key=personality.get, reverse=True)[:3]
+    except:
+        personalities = []
 
     return(personalities)
 
