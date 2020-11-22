@@ -82,8 +82,7 @@ export class results extends Component {
                         </Row>
                         <p className="emotion-text"> 
                             Based on your recent 
-                            <br />tweets you appear as
-                            <div className="emotion-var-text">{emotion}</div>
+                            <br />tweets you appear as <b>{emotion}</b>
                         </p>
                         <Graph data={graphData} />
                     </Col>

@@ -58,6 +58,10 @@ export class graph extends Component {
             g.attr("transform", `translate(0,${height - margin.bottom})`)
             .call(d3.axisBottom(x).tickFormat(i => data[i].name))
             .attr("font-size", '20px')
+            .selectAll("text")
+                .attr("x", 9)
+                .attr("transform", "rotate(90)")
+                .style("text-anchor", "start");
         }
         
         svg.append("g").call(xAxis);

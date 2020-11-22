@@ -12,7 +12,7 @@ export class navbar extends Component {
                 <Navbar.Brand>
                     <Link to="/" onClick={this.props.click} >
                        
-                        Project Name
+                        
                         
                     </Link>
                 </Navbar.Brand>

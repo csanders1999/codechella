@@ -12,7 +12,7 @@ def get_results(api, user):
 
     return_json = {'status':1}
 
-    public_tweets = api.user_timeline(user, count=151, tweet_mode='extended')
+    public_tweets = api.user_timeline(user, count=150, tweet_mode='extended')
     return_json['total_number_of_tweets'] = len(public_tweets)
 
     bad_tweets = rate_tweets(public_tweets)
@@ -117,9 +117,10 @@ def get_impression(public_tweets):
             return_str += p + ", "
         
         return_str += "and " + personalities[-1]
-
+        
         for key, value in personality.items():
-            graph_data.append({'name': key, 'score': round(value * 100)})
+            cap = key.capitalize()
+            graph_data.append({'name': cap, 'score': round(value * 100)})
 
     except:
         return_str = ""
@@ -185,5 +186,5 @@ def get_percentage(num_total, num_bad, num_bad_pics, impressions):
     return(round(total_percentage * 100))
 
 def get_suggestions():
-    suggestions = ["Try making a bio that aligns with your professional interests!"]
+    suggestions = ["Create a bio that aligns with your professional interests!", "Connect with people in your network!", "Stay updated on trends in your field!"]
     return(suggestions)
