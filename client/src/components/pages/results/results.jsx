@@ -29,11 +29,11 @@ export class results extends Component {
         let tweetsSetUp = [];
         
         for (let index=0; index < unprofessionalTweets.length; index++) {
-            tweetsSetUp.push(<Tweets body={unprofessionalTweets[index].tweet} reason={unprofessionalTweets[index].reason} key={index} />)
+            tweetsSetUp.push(<Tweets body={unprofessionalTweets[index].tweet} reason={unprofessionalTweets[index].reason} key={unprofessionalTweets[index].id} />)
         }
 
         for (let index=0; index < pictureTweets.length; index++) {
-            tweetsSetUp.push(<Tweets body={pictureTweets[index].tweet} reason={pictureTweets[index].reason} key={index} />)
+            tweetsSetUp.push(<Tweets body={pictureTweets[index].tweet} reason={pictureTweets[index].reason} key={pictureTweets[index].id} />)
         }
 
         this.setState({
