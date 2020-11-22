@@ -11,7 +11,7 @@ export class graph extends Component {
         this.state = {
             width: 500,
             height: 450,
-            margin: { top: 50, bottom: 50, left: 50, right: 50 },
+            margin: { top: 0, bottom: 50, left: 50, right: 50 },
             data: this.props.data
         };
     }
@@ -22,7 +22,7 @@ export class graph extends Component {
         const svg = d3.select('#d3-container')
             .append('svg')
             .attr('width', width - margin.left - margin.right)
-            .attr('height', height +200)
+            .attr('height', height)
             .attr("viewBox", [0, 0, width, height]);
         
         // this allows chart to be dynamic and allow any data
@@ -57,7 +57,7 @@ export class graph extends Component {
         function xAxis(g) {
             g.attr("transform", `translate(0,${height - margin.bottom})`)
             .call(d3.axisBottom(x).tickFormat(i => data[i].name))
-            .attr("font-size", '20px')
+            .attr("font-size", '12px')
             .selectAll("text")
                 .attr("x", 8)
                 .attr("transform", "rotate(65)")

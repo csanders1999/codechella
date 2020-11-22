@@ -13,12 +13,14 @@
 .flagged-text {
     color: #1DA1F2;
     font-family: Roboto;
+    font-size: 130%;
 }
 
 .suggestion-text {
     color: #1DA1F2;
     font-family: Roboto;
     font-weight: lighter;
+    margin-left: 5%;
 }
 
 .rating-text {

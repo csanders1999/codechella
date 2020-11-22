@@ -12,7 +12,7 @@ def get_results(api, user):
 
     return_json = {'status':1}
 
-    public_tweets = api.user_timeline(user, count=150, tweet_mode='extended')
+    public_tweets = api.user_timeline(user, count=151, tweet_mode='extended')
     return_json['total_number_of_tweets'] = len(public_tweets)
 
     bad_tweets = rate_tweets(public_tweets)
@@ -45,7 +45,7 @@ def get_impression(public_tweets):
 
     personality = {
         'adventurous' : 0,
-        'emotionally-intelligent' : 0,
+        'emotional-quotient' : 0,
         'imaginative' : 0,
         'intellectual' : 0,
 
@@ -89,7 +89,7 @@ def get_impression(public_tweets):
             ).get_result()
 
         personality['adventurous'] += profile['personality'][0]['children'][0]['raw_score']
-        personality['emotionally-intelligent'] += profile['personality'][0]['children'][2]['raw_score']
+        personality['emotional-quotient'] += profile['personality'][0]['children'][2]['raw_score']
         personality['imaginative'] += profile['personality'][0]['children'][3]['raw_score']
         personality['intellectual'] += profile['personality'][0]['children'][4]['raw_score']
 

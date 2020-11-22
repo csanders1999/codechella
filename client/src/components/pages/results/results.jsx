@@ -71,7 +71,7 @@ export class results extends Component {
             <>
                 
                 <Col className="summary-text">
-                    <h1 className="display-1">Summary</h1>
+                    <h1 className="display-1 mr-5">Summary</h1>
                 </Col>
                 <Row className="info-con">
                     <Col className="ml-5">
@@ -80,11 +80,11 @@ export class results extends Component {
                                 {rating}%
                             </h1>
                         </Row>
-                        <p className="emotion-text"> 
+                        <p className="emotion-text mt-4"> 
                             Based on your recent 
                             <br />tweets you appear as <b>{emotion}</b>
                         </p>
-                        <Graph data={graphData} />
+                            <Graph data={graphData} />
                     </Col>
                     <Col>
                         <h3 className="flagged-text display-5">
